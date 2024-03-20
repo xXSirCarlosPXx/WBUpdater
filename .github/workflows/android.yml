@@ -3,8 +3,8 @@ name: Android CI
 on: [push, workflow_dispatch]
 
 env:
-  version: '1.0'
-  branch: ver/1.0
+  version: '1.24.0'
+  branch: ver/1
 
 jobs:
   build:
@@ -30,6 +30,7 @@ jobs:
         name: WBUpdater APK
         path: build/libs/WBUpdater-*.apk
     - name: Automatic Releases
+      if: github.ref_name == env.branch
       uses: marvinpinto/action-automatic-releases@latest
       with:
         title: "Build #${{ env.workflow }}"

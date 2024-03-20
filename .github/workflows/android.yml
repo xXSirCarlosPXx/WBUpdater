@@ -1,7 +1,18 @@
 name: Android CI
 
-on: [push, workflow_dispatch]
-
+on:
+  push:
+    branches:
+      - '*'
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches:
+      - '*'
+    paths-ignore:
+      - '**.md'
+  workflow_dispath:
+    
 env:
   version: '1.24.0'
   branch: ver/1
@@ -28,7 +39,7 @@ jobs:
       uses: actions/upload-artifact@v4.3.1
       with:
         name: WBUpdater APK
-        path: build/libs/WBUpdater-*.apk
+        path: app/build/apk/debug/app-debug.apk
     - name: Automatic Releases
       if: github.ref_name == env.branch
       uses: marvinpinto/action-automatic-releases@latest
@@ -36,5 +47,5 @@ jobs:
         title: "Build #${{ env.workflow }}"
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: latest-${{ env.version }}
-        files: build/libs/WBUpdater-*.apk
+        files: app/build/apk/debug/app-debug.apk
         prerelease: false

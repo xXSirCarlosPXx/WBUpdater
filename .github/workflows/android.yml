@@ -14,8 +14,7 @@ on:
   workflow_dispatch:
     
 env:
-  version: '1.24.0'
-  branch: ver/1
+  version: 'v1.24.0-test'
 
 jobs:
   build:
@@ -31,21 +30,34 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+    - uses: ilharp/sign-android-release@v1
+      name: Sign app APK
+      id: sign_app
+      with:
+        releaseDir: app/build/outputs/apk/release
+        signingKey: ${{ secrets.SIGNING_KEY }}
+        keyAlias: ${{ secrets.ALIAS }}
+        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+        buildToolsVersion: 33.0.0
+    #- name: Grant execute permission for gradlew
+    #  run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+    #  run: ./gradlew build
+    - uses: gradle/gradle-build-action@v2
+    - run: gradle assembleRelease
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.1
       with:
         name: WBUpdater APK
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/release/*.apk
     - name: Automatic Releases
-      if: github.ref_name == env.branch
       uses: marvinpinto/action-automatic-releases@latest
       with:
-        title: "Build #${{ env.workflow }}"
+        title: "${{ env.version }}"
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: latest-${{ env.version }}
-        files: app/build/outputs/apk/debug/app-debug.apk
+        automatic_release_tag: "${{ env.version }}"
+        files: app/build/outputs/apk/release/*.apk
         prerelease: false

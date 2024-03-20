@@ -13,6 +13,9 @@ on:
       - '**.md'
   workflow_dispatch:
 
+env:
+  version: 'v24.1.0-beta'
+
 jobs:
   build:
 
@@ -60,6 +63,6 @@ jobs:
       with:
         title: "${{ env.version }}"
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
+        automatic_release_tag: "${{ env.version }}"
         files: app/build/outputs/apk/debug/*.apk
         prerelease: false

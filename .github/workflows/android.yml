@@ -58,6 +58,8 @@ jobs:
       with:
         name: WBUpdater APK
         path: ${{steps.sign_app.outputs.signedFile}} #app/build/outputs/apk/debug/*.apk
+        if-no-files-found: warn
+        retention-days: 90
     - name: Automatic Releases
       uses: marvinpinto/action-automatic-releases@latest
       with:

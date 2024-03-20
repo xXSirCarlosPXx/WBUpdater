@@ -36,11 +36,11 @@ jobs:
     #  run: chmod +x gradlew
     - name: Build with Gradle
     #  run: ./gradlew build
-      uses: gradle/gradle-build-action@v2
+    - uses: gradle/gradle-build-action@v2
     - run: gradle assembleRelease
     - name: Sign app APK
       uses: ilharp/sign-android-release@v1
-      id: sign_app
+    #  id: sign_app
       with:
         releaseDir: app/build/outputs/apk/release
         signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
@@ -48,11 +48,11 @@ jobs:
         keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
         buildToolsVersion: 33.0.0
-    - uses: jungwinter/split@v2
-      id: signed_files
-      with:
-        msg: ${{ steps.sign_app.outputs.signedFiles }}
-        separator: ':'
+    #- uses: jungwinter/split@v2
+    #  id: signed_files
+    #  with:
+    #    msg: ${{ steps.sign_app.outputs.signedFiles }}
+    #    separator: ':'
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.1
       with:

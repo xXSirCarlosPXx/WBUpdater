@@ -12,9 +12,6 @@ on:
     paths-ignore:
       - '**.md'
   workflow_dispatch:
-    
-env:
-  version: v1.24.0-test
 
 jobs:
   build:
@@ -63,6 +60,6 @@ jobs:
       with:
         title: "${{ env.version }}"
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{ env.version }}"
+        automatic_release_tag: "v1.24.0-test"
         files: app/build/outputs/apk/debug/*.apk
         prerelease: false

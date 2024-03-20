@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     
 env:
-  version: 'v1.24.0-test'
+  version: v1.24.0-test
 
 jobs:
   build:

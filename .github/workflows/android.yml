@@ -60,6 +60,6 @@ jobs:
       with:
         title: "${{ env.version }}"
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "v1.24.0-test"
+        automatic_release_tag: "latest"
         files: app/build/outputs/apk/debug/*.apk
         prerelease: false

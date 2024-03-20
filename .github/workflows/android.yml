@@ -39,7 +39,7 @@ jobs:
       uses: actions/upload-artifact@v4.3.1
       with:
         name: WBUpdater APK
-        path: app/build/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
     - name: Automatic Releases
       if: github.ref_name == env.branch
       uses: marvinpinto/action-automatic-releases@latest
@@ -47,5 +47,5 @@ jobs:
         title: "Build #${{ env.workflow }}"
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: latest-${{ env.version }}
-        files: app/build/apk/debug/app-debug.apk
+        files: app/build/outputs/apk/debug/app-debug.apk
         prerelease: false

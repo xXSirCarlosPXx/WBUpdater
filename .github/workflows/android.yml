@@ -11,7 +11,7 @@ on:
       - '*'
     paths-ignore:
       - '**.md'
-  workflow_dispath:
+  workflow_dispatch:
     
 env:
   version: '1.24.0'
